@@ -1,0 +1,6 @@
+# wp-cliを使用し、wordpressのインストール
+- name: wp-cli wordpress install
+  command: >-
+    /usr/local/bin/wp core install --url={{ subdomain }}.{{ domain }} --title="{{subdomain}} test website" --admin_user={{ prefix }}_admin --admin_password={{ prefix }}_pass --admin_email="{{ email }}@ingsnet.co.jp"
+    chdir={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}
+  sudo: no

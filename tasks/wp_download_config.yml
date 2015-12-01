@@ -1,0 +1,15 @@
+# wp-cliを使用し、wordpressのコアファイルを取得
+- name: wp-cli core file download
+  command: >-
+    /usr/local/bin/wp core download --locale=ja
+    chdir={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}
+    creates={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}/index.php
+  sudo: no
+
+# wp-cliを使用し、wp-config.phpを作成
+- name: wp-cli config
+  command:  >-
+    /usr/local/bin/wp core config --dbname={{ subdomain }} --dbuser={{ subdomain }} --dbpass={{ dbpass }} --dbhost=localhost --dbprefix={{ prefix }}_ --skip-check
+    chdir={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}
+    creates={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}/wp-config.php
+  sudo: no

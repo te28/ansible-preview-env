@@ -1,0 +1,7 @@
+# wordpressのディレクトリを作成
+- name: create <subdomain>.ingsnet.info/htdocs/<prefix> directory
+  file: >-
+    dest={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}
+    state=directory
+    owner={{ user }}
+    group={{ group}}

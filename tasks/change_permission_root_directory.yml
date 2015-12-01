@@ -1,0 +1,8 @@
+#  サブドメインのオーナー、グループをsftpユーザーに変更
+- name: chown <subdomain>.ingsnet.info directory
+  file: >-
+    dest={{ www_dir }}/{{ subdomain }}.{{ domain }}
+    state=directory
+    recurse=yes
+    owner={{ sftpuser }}
+    group={{ sftpgroup }}

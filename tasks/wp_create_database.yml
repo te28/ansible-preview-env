@@ -1,0 +1,19 @@
+# データベースの作成
+# ※データベース名はサブドメイン名と同じ
+- name: create a database
+  mysql_db: >-
+    name={{ subdomain }}
+    state=present
+    login_user=root
+    login_password={{ root_dbpass }}
+
+# データベースにユーザー追加
+# ※ユーザー名はサブドメイン名と同じ
+- name: create a user
+  mysql_user:  >-
+    name={{ subdomain }}
+    password={{ dbpass }}
+    priv={{ subdomain }}.*:ALL
+    state=present
+    login_user=root
+    login_password={{ root_dbpass }}

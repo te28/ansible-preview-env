@@ -1,0 +1,15 @@
+#  サブドメインのディレクトリを作成
+- name: create <subdomain>.ingsnet.info directory
+  file: >-
+    dest={{ www_dir }}/{{ subdomain }}.{{ domain }}
+    state=directory
+    owner={{ user }}
+    group={{ group }}
+
+# ドキュメントルートのディレクトリを作成
+- name: create <subdomain>.ingsnet.info/htdocs directory
+  file: >-
+    dest={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}
+    state=directory
+    owner={{ user }}
+    group={{ group}}

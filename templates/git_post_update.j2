@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# ----------------------------------
+# push されたブランチ名を取得
+# ----------------------------------
+
+branch=$(git rev-parse --symbolic --abbrev-ref $1)
+echo Update pushed to branch $branch
+
+
+# ----------------------------------
+# git のワークツリーを展開したディレクトリに移動。
+# ----------------------------------
+
+cd {{ www_dir }}/{{ subdomain }}.{{ domain }}/{{worktree_dir}}
+
+
+# ----------------------------------
+# push されたブランチが存在するかどうかをチェック
+# ----------------------------------
+
+git --git-dir=.git rev-parse --symbolic --verify -q $branch
+exsit_branch=$?
+
+
+# ----------------------------------
+# push された ブランチに切り替えて変更内容を pull する。
+# ----------------------------------
+
+if test ${exsit_branch} -eq 0
+then
+git --git-dir=.git checkout $branch
+else
+git --git-dir=.git checkout -b $branch
+fi
+
+git --git-dir=.git pull origin $branch

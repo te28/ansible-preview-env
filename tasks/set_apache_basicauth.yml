@@ -1,0 +1,22 @@
+# .htpasswd ファイルを作成する
+# ユーザー名：{{ subdomain }}、パスワード：{{ authpasswd }}
+- name: create <subdomain>.ingsnet.info/.htpasswd file
+  command: /usr/bin/htpasswd -cb {{ www_dir }}/{{ subdomain }}.{{ domain }}/.htpasswd {{ subdomain }} {{ authpasswd }}
+  sudo: no
+
+# .htpasswd ファイルに暗号化前のパスワードを追記しておく
+- name: append original password
+  lineinfile: >-
+    dest={{ www_dir }}/{{ subdomain }}.{{ domain }}/.htpasswd
+    state=present
+    regexp='^# ID:{{ subdomain }}'
+    insertbefore='^{{ subdomain }}'
+    line='# ID:{{ subdomain }} PASS:{{ authpasswd }}'
+
+# .htaccess ファイルを作成する
+- name: create <subdomain>.ingsnet.info/.htaccess file
+  template: >-
+    src=./templates/apache_basicauth_htaccess.j2 dest={{ www_dir }}/{{ subdomain }}.{{ domain }}/.htaccess
+    owner={{ user }}
+    group={{ group }}
+    follow=yes

@@ -1,0 +1,27 @@
+# wp-config.php内に公開URL記述を追加
+# define( 'WP_DEBUG', true );
+- name: wp-config.php site address set
+  lineinfile: >-
+    dest={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}/wp-config.php
+    state=present
+    insertafter="^\$table_prefix" line="define( 'WP_HOME', 'http://{{ subdomain }}.{{ domain }}' );"
+  sudo: no
+
+# wp-config.php内にwordpressディレクトリの記述を追加
+- name: wp-config.php wordpress directory set
+  lineinfile: >-
+    dest={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}/wp-config.php
+    state=present
+    insertafter="^\$table_prefix"
+    line="define( 'WP_SITEURL', 'http://{{ subdomain }}.{{ domain }}/{{ prefix }}' );"
+  sudo: no
+
+# wp-config.php内にdebugモードの記述を追加
+# define( 'WP_DEBUG', true );
+- name: wp-config.php debug mode true
+  lineinfile: >-
+    dest={{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ docroot }}/{{ prefix }}/wp-config.php
+    state=present
+    insertafter="^\$table_prefix"
+    line="define( 'WP_DEBUG', true );"
+  sudo: no

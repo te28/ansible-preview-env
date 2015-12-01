@@ -1,0 +1,12 @@
+# -----------------------
+# Basic Authentication
+# -----------------------
+
+# .htpasswd
+AuthUserFile {{ www_dir }}/{{ subdomain }}.{{ domain }}/.htpasswd
+
+AuthGroupFile /dev/null
+AuthName "{{ subdomain }}"
+AuthType Basic
+require valid-user
+order deny,allow
