@@ -6,9 +6,9 @@
     www_dir: '/var/www/html'
     wp_dir: 'wp'
     repo_dir: 'repository.git'
-    domain: 'ingsnet.info'
+    domain: 'xxx.xxx'
     docroot: 'htdocs'
-    user: 'ings'
+    user: 'xxx'
     group: 'apache'
   # インタラクティブに聞かれる変数
   vars_prompt:

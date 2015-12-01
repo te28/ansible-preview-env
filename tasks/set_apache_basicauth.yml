@@ -1,6 +1,6 @@
 # .htpasswd ファイルを作成する
 # ユーザー名：{{ subdomain }}、パスワード：{{ authpasswd }}
-- name: create <subdomain>.ingsnet.info/.htpasswd file
+- name: create <subdomain>.xxx.xxx/.htpasswd file
   command: /usr/bin/htpasswd -cb {{ www_dir }}/{{ subdomain }}.{{ domain }}/.htpasswd {{ subdomain }} {{ authpasswd }}
   sudo: no
 
@@ -14,7 +14,7 @@
     line='# ID:{{ subdomain }} PASS:{{ authpasswd }}'
 
 # .htaccess ファイルを作成する
-- name: create <subdomain>.ingsnet.info/.htaccess file
+- name: create <subdomain>.xxx.xxx/.htaccess file
   template: >-
     src=./templates/apache_basicauth_htaccess.j2 dest={{ www_dir }}/{{ subdomain }}.{{ domain }}/.htaccess
     owner={{ user }}

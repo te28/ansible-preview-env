@@ -5,9 +5,9 @@
   vars:
     www_dir: '/var/www/html'
     repo_dir: 'repository.git'
-    domain: 'ingsnet.info'
+    domain: 'xxx.xxx'
     docroot: 'htdocs'
-    user: 'ings'
+    user: 'xxx'
     group: 'apache'
   # インタラクティブに聞かれる変数
   vars_prompt:
@@ -22,7 +22,7 @@
     # 今回作成するDBのパスワード
     dbpass: "Enter Wordpress Database Password"
     # wordpressの管理者メールアドレス
-    email: "Enter Your Name => Send Mail To < name >@ingsnet.co.jp"
+    email: "Enter Your Name => Send Mail To < name >@xxxx.co.jp"
 
   tasks:
     # サブドメインのディレクトリ＆ドキュメントルートのディレクトリを作成

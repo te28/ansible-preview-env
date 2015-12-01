@@ -1,5 +1,5 @@
 #  サブドメインのオーナー、グループをsftpユーザーに変更
-- name: chown <subdomain>.ingsnet.info directory
+- name: chown <subdomain>.xxx.xxx directory
   file: >-
     dest={{ www_dir }}/{{ subdomain }}.{{ domain }}
     state=directory

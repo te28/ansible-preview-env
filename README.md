@@ -53,7 +53,7 @@ $ pip install ansible
 
 ```
 $ cd ~/hoge
-$ git clone https://192.168.1.201/git/house-projects.ansible-sakuravps
+$ git clone https://xxx.xxx.xxx.xxx/git/house-projects.ansible-sakuravps
 ```
 
 ### Ansibleの実行
@@ -94,8 +94,8 @@ Enter Basic Authentication Password: : // ベーシック認証のパスワー�
 
 #### 実施する内容
 
-* xxxx.ingsnet.infoのサブドメイン用ディレクトリ作成
-* xxxx.ingsnet.infoにベーシック認証を設定
+* xxxx.xxxx.xxxxのサブドメイン用ディレクトリ作成
+* xxxx.xxxx.xxxxにベーシック認証を設定
 * gitのbareリポジトリ設定(repository.git)
 
 #### ２．サブドメインとGit Bareリポジトリの作成 + wordpressの環境構築実施
@@ -114,15 +114,15 @@ Enter Prefix : // wordpressのDBのprefixやwordpressのコアファイル格納
 Enter Subdomain Name: : // 作成したいサブドメインを入力
 Enter Basic Authentication Password: : // ベーシック認証のパスワードを設定
 Enter Wordpress Database Password: : // wordpress用のデータベースパスワードを入力
-Enter Your Name => {{ name }}@ingsnet.co.jp: : // wordpressの管理者用メールアドレス
+Enter Your Name => {{ name }}@xxx.co.jp: : // wordpressの管理者用メールアドレス
 ```
 
 ### 実施する内容と設定される項目
 
 #### 実施する内容
 
-* xxxx.ingsnet.infoのサブドメイン用ディレクトリ作成
-* xxxx.ingsnet.infoにベーシック認証を設定
+* xxxx.xxx.xxxのサブドメイン用ディレクトリ作成
+* xxxx.xxx.xxxにベーシック認証を設定
 * gitのbareリポジトリ設定(repository.git)
 * wordpress用DB、ユーザーの作成
 * wordpressのコアファイルを取得し、サブディレクトリ({prefix})に展開
@@ -136,10 +136,10 @@ Enter Your Name => {{ name }}@ingsnet.co.jp: : // wordpressの管理者用メー
 |DBユーザー|`<サブドメイン名>`|
 |DBパスワード|`<DBパスワード>`|
 |DB prefix|`<prefix>`_|
-|公開URL|`<サブドメイン名>`.ingsnet.info|
-|wordpressURL|`<サブドメイン名>`.ingsnet.info/`<prefix>`|
+|公開URL|`<サブドメイン名>`.xxx.xxx|
+|wordpressURL|`<サブドメイン名>`.xxx.xxx/`<prefix>`|
 |wordpress管理者ID|`<prefix>`_admin|
 |wordpress管理者パスワード|`<prefix>`_pass|
-|wordpress管理者メールアドレス|`<name>`@ingsnet.co.jp|
+|wordpress管理者メールアドレス|`<name>`@xxx.co.jp|
 |wordpress debugモード|有効|
 

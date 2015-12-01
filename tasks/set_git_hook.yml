@@ -1,5 +1,5 @@
 # リポジトリを clone する
-- name: git clone to <subdomain>.ingsnet.info/worktree directory
+- name: git clone to <subdomain>.xxx.xxx/worktree directory
   command: >-
     /usr/local/bin/git clone {{ www_dir }}/{{ subdomain }}.{{ domain }}/{{ repo_dir }} {{ worktree_dir }}
     chdir={{ www_dir }}/{{ subdomain }}.{{ domain }}

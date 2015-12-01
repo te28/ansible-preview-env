@@ -4,11 +4,11 @@
   # 変数定義
   vars:
     www_dir: '/var/www/html'
-    domain: 'ingsnet.info'
+    domain: 'xxx.xxx'
     docroot: 'htdocs'
     user: 'ings'
     group: 'apache'
-    sftpuser: 'ingssftp'
+    sftpuser: 'xxxx'
     sftpgroup: 'sftponly'
   # インタラクティブに聞かれる変数
   vars_prompt:
