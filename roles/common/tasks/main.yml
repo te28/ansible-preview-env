@@ -1,0 +1,4 @@
+---
+- include: create_root_directory.yml
+- include: set_basic_auth.yml
+- include: create_git_repository.yml

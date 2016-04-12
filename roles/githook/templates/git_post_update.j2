@@ -12,7 +12,7 @@ echo Update pushed to branch $branch
 # git のワークツリーを展開したディレクトリに移動。
 # ----------------------------------
 
-cd {{ www_dir }}/{{ subdomain }}.{{ domain }}/{{worktree_dir}}
+cd {{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ githook_worktree_dir }}
 
 
 # ----------------------------------

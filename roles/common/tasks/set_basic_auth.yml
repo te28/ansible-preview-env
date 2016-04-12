@@ -1,0 +1,22 @@
+# .htpasswd ファイルを作成する
+# ユーザー名：{{ common_subdomain }}、パスワード：{{ common_authpasswd }}
+- name: create <subdomain>.xxxx.xxxx/.htpasswd file
+  command: /usr/bin/htpasswd -cb {{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/.htpasswd {{ common_subdomain }} {{ common_authpasswd }}
+  become_user: "{{ common_user }}"
+
+# .htpasswd ファイルに暗号化前のパスワードを追記しておく
+- name: append original password
+  lineinfile: >-
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/.htpasswd
+    state=present
+    regexp='^# ID:{{ common_subdomain }}'
+    insertbefore='^{{ common_subdomain }}'
+    line='# ID:{{ common_subdomain }} PASS:{{ common_authpasswd }}'
+
+# .htaccess ファイルを作成する
+- name: create <subdomain>.xxxx.xxxx/.htaccess file
+  template: >-
+    src=../templates/apache_basicauth_htaccess.j2 dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/.htaccess
+    owner={{ common_user }}
+    group={{ common_group }}
+    follow=yes

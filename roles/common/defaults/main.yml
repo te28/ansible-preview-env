@@ -1,0 +1,21 @@
+---
+
+# ====================
+# common
+# ====================
+
+# 共通パス設定
+common_www_dir: '/var/www/html'
+common_repo_dir: 'repository.git'
+common_domain: 'xxxx.xxx'
+common_docroot: 'htdocs'
+
+# デフォルトのユーザー設定
+common_user: 'xxx'
+common_group: 'apache'
+
+# デフォルトのサブドメイン名（各 playbook で上書きする）
+common_subdomain: 'xxxxx'
+
+# デフォルトの basic 認証の password（各 playbook で上書きする）
+common_authpasswd: 'xxxxx'

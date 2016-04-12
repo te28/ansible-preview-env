@@ -1,0 +1,31 @@
+---
+
+# ====================
+# wordpress
+# ====================
+
+# mysqlのroot password（編集しない）
+wordpress_root_db_pass: 'xxxx'
+
+# wordpressサイト名
+wordpress_site_name: 'your site name'
+
+# wordpressディレクトリ
+# コアファイルをサブディレクトリにインストールする場合は'/wp'のような形式で指定
+wordpress_directory: '' # like '/wp'
+
+# wordpressで使用するDB名
+wordpress_db_name: 'your_db_name'
+# wordpressで使用するDBユーザー
+wordpress_db_user: 'your_db_user'
+# wordpressで使用するDBのパスワード
+wordpress_db_password: 'your_db_pass'
+# wordpressで使用するDBのprefix
+wordpress_db_prefix: 'wp_'
+
+# wordpressの管理ユーザー名
+wordpress_site_admin_user: 'admin'
+# wordpressの管理ユーザーパスワード
+wordpress_site_admin_password: 'password'
+# wordpressの管理ユーザーメールアドレス
+wordpress_site_admin_email: 'xxxx@xxxx.co.jp'

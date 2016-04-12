@@ -1,0 +1,4 @@
+---
+
+# Git Hook の設定
+- include: set_git_hook.yml

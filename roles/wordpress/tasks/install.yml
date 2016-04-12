@@ -1,0 +1,8 @@
+# wp-cliを使用し、wordpressのインストール
+- name: install WordPress
+  become: no
+  command: >
+    wp core install --url=http://{{ common_subdomain }}.{{ common_domain }} --title="{{ wordpress_site_name }}" --admin_user={{ wordpress_site_admin_user }} --admin_password={{ wordpress_site_admin_password }} --admin_email={{ wordpress_site_admin_email }}
+    chdir={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}{{ wordpress_directory }}
+  when: db_exists|changed
+  tags: wordpress

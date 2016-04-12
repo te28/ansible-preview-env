@@ -1,0 +1,29 @@
+# wordpressディレクトリの指定があるか確認
+- name: wordpress directory Exists Check
+  stat: path={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}/index.php
+  register: wp_dir
+
+# wordpressをサブディレクトリにインストールする場合のみ実行
+# index.phpをドキュメントルートへコピー
+- name: index.php copy from wordpress directory to document root
+  become: no
+  shell: >
+    cp {{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}{{ wordpress_directory }}/index.php {{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}/index.php
+    creates={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}/index.php
+  when: not wp_dir.stat.exists
+  tags: wordpress
+
+# wordpressをサブディレクトリにインストールする場合のみ実行
+# コピーしたindex.php内のパスを編集
+# 前) require( dirname( __FILE__ ) . '/wp-blog-header.php' );
+# 後) require( dirname( __FILE__ ) . '/wp/wp-blog-header.php' );
+- name: index.php require path change
+  lineinfile: >
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}/index.php
+    state=present
+    regexp='wp-blog-header.php'
+    line="require( dirname( __FILE__ ) . '{{ wordpress_directory }}/wp-blog-header.php' );"
+  become: no
+  when: not wp_dir.stat.exists
+  tags: wordpress
+

@@ -1,0 +1,25 @@
+# wordpressのディレクトリを作成
+- name: create <subdomain>.xxxx.xxxx/htdocs/<wp_dir> directory
+  file: >-
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}/{{ wordpress_directory }}
+    state=directory
+    owner={{ common_user }}
+    group={{ common_group }}
+
+# wp-cliを使用し、wordpressのコアファイルを取得
+- name: download WordPress
+  become: no
+  command: >
+    wp core download --locale=ja --path={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}{{ wordpress_directory }}
+    chdir={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}{{ wordpress_directory }}
+    creates={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}{{ wordpress_directory }}/index.php
+  tags: wordpress
+
+# ディレクトリのパーミッションを変更
+- name: Change Permission
+  file: >-
+    path={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}{{ wordpress_directory }}
+    state=directory
+    owner={{ common_user }}
+    group={{ common_group }}
+    recurse=yes

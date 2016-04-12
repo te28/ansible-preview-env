@@ -1,0 +1,14 @@
+# wp-config.phpに記入するsaltの取得
+- name: Fetch random salts for WordPress config
+  local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
+  register: "wp_salt"
+  become: no
+
+# wp-config.phpをテンプレートからコピー
+- name: Copy WordPress config file
+  template: >-
+    src=../templates/wp-config.php
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}{{ wordpress_directory }}
+    owner={{ common_user }}
+    group={{ common_group }}
+    mode=u=r,g=r,o=

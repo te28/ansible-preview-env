@@ -1,0 +1,12 @@
+# bareリポジトリ用のディレクトリを作成
+- name: create git repository directory
+  file: >-
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_repo_dir }}
+    state=directory
+    owner={{ common_user }}
+    group={{ common_group }}
+
+# bareリポジトリを作成
+- name: git init bare
+  command: /usr/local/bin/git init --bare --shared chdir={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_repo_dir }}
+  become_user: "{{ common_user }}"

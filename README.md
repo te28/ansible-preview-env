@@ -1,12 +1,13 @@
-# ansibleを使用したプレビュー環境構築
+# ansible + wp-cliを使用した環境構築
 
 ## Ansible
 
-python製のサーバーの構成管理ツール
+* python製のサーバーの構成管理ツール
 
 <http://www.ansible.com/home>
 
 * 日本語のチュートリアル
+
 <http://yteraoka.github.io/ansible-tutorial/>
 
 ## wp-cli
@@ -19,12 +20,12 @@ wordpressのコマンドラインインターフェース
 
 * Inventry:どのサーバーを管理するかを記述する(/.hosts)
 * ansible.cfg:ansibleの設定を記述(./ansible.cfg)
-* Playbook:どういった構成を作るかを記載(./playbook.yaml)
+* Playbook:どういった構成を作るかを記載(./site.yaml)
 
 ## 環境
 
 * python： 2.7.6
-* ansible： 1.8.4
+* ansible： 1.9.4
 
 ## 導入方法
 
@@ -53,12 +54,12 @@ $ pip install ansible
 
 ```
 $ cd ~/hoge
-$ git clone https://xxx.xxx.xxx.xxx/git/house-projects.ansible-sakuravps
+$ git clone https://github.com/te28/ansible-preview-env
 ```
 
 ### Ansibleの実行
 
-２パターンのplaybookを用意しています。
+3パターンのplaybookを用意しています。
 設定したい内容によってplaybookのパスを変更して下さい。
 
 #### コマンド実行時の注意点
@@ -80,16 +81,21 @@ $ git clone https://xxx.xxx.xxx.xxx/git/house-projects.ansible-sakuravps
 #### １．サブドメインとGit Bareリポジトリのみ作成
 
 ```
-$ ansible-playbook playbook.yml
+$ ansible-playbook site.yml
 ```
 
-上記を実行すると質問が表示されますので
-入力して下さい。
+上記を実行するとアカウントのパスワードを聞かれるので入力して下さい。
 
-```
-sudo password:  // ingsアカウントのパスワードを入力
-Enter Subdomain Name: : // 作成したいサブドメインを入力
-Enter Basic Authentication Password: : // ベーシック認証のパスワードを設定
+#### 実施時の設定
+
+サブドメイン名とベーシック認証のパスワードを設定するために、
+`site.yml` の以下の値を変更した上で実行してください。
+
+```yaml
+# 実行時に設定する変数
+vars:
+  common_subdomain: <サブドメイン名>
+  common_authpasswd: <ベーシック認証のパスワード>
 ```
 
 #### 実施する内容
@@ -97,49 +103,73 @@ Enter Basic Authentication Password: : // ベーシック認証のパスワー�
 * xxxx.xxxx.xxxxのサブドメイン用ディレクトリ作成
 * xxxx.xxxx.xxxxにベーシック認証を設定
 * gitのbareリポジトリ設定(repository.git)
+* リポジトリのcloneを作成し、bareリポジトリに push されることで
+該当のブランチをデプロイするGitHookを設置
 
-#### ２．サブドメインとGit Bareリポジトリの作成 + wordpressの環境構築実施
-
-```
-$ ansible-playbook playbook_wp.yml
-```
-
-上記を実行すると幾つか質問されますのでそれぞれについて入力をして下さい。
-記入した内容で設定が実施されます。
+#### ２. サブドメインとGit Bareリポジトリの作成 + wordpressの環境構築実施
 
 ```
-sudo password:  // ssh ingsアカウントのパスワードを入力
-Enter Database Root Password:  // MySQLのrootアカウントのパスワードを入力
-Enter Prefix : // wordpressのDBのprefixやwordpressのコアファイル格納ディレクトリに使用される文字を入力
-Enter Subdomain Name: : // 作成したいサブドメインを入力
-Enter Basic Authentication Password: : // ベーシック認証のパスワードを設定
-Enter Wordpress Database Password: : // wordpress用のデータベースパスワードを入力
-Enter Your Name => {{ name }}@xxx.co.jp: : // wordpressの管理者用メールアドレス
+$ ansible-playbook wordpress.yml
+```
+
+上記を実行するとアカウントのパスワードを聞かれるので入力して下さい。
+
+#### 実施時の設定
+
+サブドメイン名とベーシック認証のパスワード、
+WordPress の設定を行うために、`wordpress.yml` の以下の値を変更した上で実行してください。
+
+```yaml
+# 実行時に設定する変数
+vars:
+  common_subdomain: <サブドメイン名>
+  common_authpasswd: <ベーシック認証のパスワード>
+
+  # wordpressサイト名
+  wordpress_site_name:
+
+  # wordpressディレクトリ
+  # コアファイルをサブディレクトリにインストールする場合は
+  # /wpのような形式で指定する
+  wordpress_directory:
+
+  # wordpressで使用するDBの設定
+  wordpress_db_name:
+  wordpress_db_user:
+  wordpress_db_password:
+  wordpress_db_prefix:
+
+  # wordpressの管理ユーザーの設定
+  wordpress_site_admin_user:
+  wordpress_site_admin_password:
+  wordpress_site_admin_email:
 ```
 
 ### 実施する内容と設定される項目
 
 #### 実施する内容
 
-* xxxx.xxx.xxxのサブドメイン用ディレクトリ作成
-* xxxx.xxx.xxxにベーシック認証を設定
+* xxxx.xxxx.xxxxのサブドメイン用ディレクトリ作成
+* xxxx.xxxx.xxxxにベーシック認証を設定
 * gitのbareリポジトリ設定(repository.git)
 * wordpress用DB、ユーザーの作成
-* wordpressのコアファイルを取得し、サブディレクトリ({prefix})に展開
+* wordpressのコアファイルを取得、展開
 * wordpressのインストール
 
 #### 設定項目
 
 |項目|値|
 |:--|:--|
-|DB名|`<サブドメイン名>`|
-|DBユーザー|`<サブドメイン名>`|
-|DBパスワード|`<DBパスワード>`|
-|DB prefix|`<prefix>`_|
-|公開URL|`<サブドメイン名>`.xxx.xxx|
-|wordpressURL|`<サブドメイン名>`.xxx.xxx/`<prefix>`|
-|wordpress管理者ID|`<prefix>`_admin|
-|wordpress管理者パスワード|`<prefix>`_pass|
-|wordpress管理者メールアドレス|`<name>`@xxx.co.jp|
+|DB名|`wordpress_db_name`|
+|DBユーザー|`wordpress_db_user`|
+|DBパスワード|`wordpress_db_password`|
+|DB prefix|`wordpress_db_prefix`|
+|公開URL|`subdomain`.xxxx.xxxx|
+|wordpressURL|`subdomain`.xxxx.xxxx/`wordpress_directory`※|
+|wordpress管理者ID|`wordpress_site_admin_user`|
+|wordpress管理者パスワード|`wordpress_site_admin_password`|
+|wordpress管理者メールアドレス|`wordpress_site_admin_email`|
 |wordpress debugモード|有効|
 
+* ※wordpress_directoryを空欄（''）で実行すると、ドキュメントルート直下に
+wordressのコアファイルが展開されます。

@@ -3,10 +3,10 @@
 # -----------------------
 
 # .htpasswd
-AuthUserFile {{ www_dir }}/{{ subdomain }}.{{ domain }}/.htpasswd
+AuthUserFile {{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/.htpasswd
 
 AuthGroupFile /dev/null
-AuthName "{{ subdomain }}"
+AuthName "{{ common_subdomain }}"
 AuthType Basic
 require valid-user
 order deny,allow

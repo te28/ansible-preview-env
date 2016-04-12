@@ -1,0 +1,17 @@
+---
+- hosts: ings_vps
+  become: yes
+  gather_facts: yes
+
+  # playbook の変数
+  # role の変数を上書きする
+  vars:
+
+    # 実行時に設定する変数
+    common_subdomain:
+    common_authpasswd:
+
+  # 実行されるロールの指定
+  roles:
+    - common
+    - githook

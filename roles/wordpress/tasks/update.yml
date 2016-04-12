@@ -1,0 +1,7 @@
+# wp-cliを使用し、wordpressのアップデート
+- name: update WordPress
+  become: no
+  command: >
+    wp core update --locale=ja
+    chdir={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}{{ wordpress_directory }}
+  tags: wordpress

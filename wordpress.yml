@@ -1,0 +1,36 @@
+---
+- hosts: ings_vps
+  become: yes
+  gather_facts: yes
+
+  # playbook の変数
+  # role の変数を上書きする
+  vars:
+
+    # 実行時に設定する変数
+    common_subdomain:
+    common_authpasswd:
+
+    # wordpressサイト名
+    wordpress_site_name:
+
+    # wordpressディレクトリ
+    # コアファイルをサブディレクトリにインストールする場合は
+    # /wpのような形式で指定する
+    wordpress_directory: ''
+
+    # wordpressで使用するDBの設定
+    wordpress_db_name:
+    wordpress_db_user:
+    wordpress_db_password:
+    wordpress_db_prefix:
+
+    # wordpressの管理ユーザーの設定
+    wordpress_site_admin_user:
+    wordpress_site_admin_password:
+    wordpress_site_admin_email:
+
+  # 実行されるロールの指定
+  roles:
+    - common
+    - wordpress

@@ -1,0 +1,27 @@
+# リポジトリを clone する
+- name: git clone to <subdomain>.xxxx.xxxx/worktree directory
+  command: >-
+    /usr/local/bin/git clone {{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_repo_dir }} {{ githook_worktree_dir }}
+    chdir={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}
+  become: no
+
+# git push した時に、worktree の内容を push したブランチに切り替える Git Hook を設定する。
+- name: set post-update git hook
+  template: >-
+    src=./templates/git_post_update.j2
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_repo_dir }}/hooks/post-update
+    owner={{ common_user }}
+    group={{ common_group }}
+    mode=0755
+    follow=yes
+  become: no
+
+# htdocs に worktree/htdocs へのシンボリックリンクを設定する
+# 事前に htdocs ディレクトリを作成しているので強制的にシンボリックリンクで上書き
+- name: set symlink htdocs to worktree/htdocs
+  file: >-
+    src={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ githook_worktree_dir }}/{{ common_docroot }}
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}
+    state=link
+    force=yes
+  become: no

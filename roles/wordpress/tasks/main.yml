@@ -1,0 +1,13 @@
+---
+# DBの作成
+- include: create_database.yml
+# コアファイルのダウンロード
+- include: download.yml
+# サブディレクトリインストール用にindex.phpのコピー、編集
+- include: copy_and_edit_index_php.yml
+# wp-config.phpの設定
+- include: config.yml
+# wordpressのインストール
+- include: install.yml
+# wordpressのアップデート
+- include: update.yml

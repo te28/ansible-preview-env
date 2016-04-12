@@ -1,0 +1,15 @@
+#  サブドメインのディレクトリを作成
+- name: create <subdomain>.xxxx.xxxx directory
+  file: >-
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}
+    state=directory
+    owner={{ common_user }}
+    group={{ common_group }}
+
+# ドキュメントルートのディレクトリを作成
+- name: create <subdomain>.xxxx.xxxx/htdocs directory
+  file: >-
+    dest={{ common_www_dir }}/{{ common_subdomain }}.{{ common_domain }}/{{ common_docroot }}
+    state=directory
+    owner={{ common_user }}
+    group={{ common_group }}

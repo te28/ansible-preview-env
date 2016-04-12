@@ -1,0 +1,8 @@
+---
+
+# ====================
+# githook
+# ====================
+
+# Git Hook で利用するワークツリーのディレクトリ
+githook_worktree_dir: 'worktree'
